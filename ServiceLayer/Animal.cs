@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ZooSimulator.ServiceLayer
+﻿namespace ZooSimulator.ServiceLayer
 {
     internal abstract class Animal : IAnimal
     {
