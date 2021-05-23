@@ -14,6 +14,9 @@ namespace ZooSimulator.InterfaceLayer
     public partial class MainDisplay : Form
     {
         private const string cTimeAtTheZoo = "Time at the Zoo: ";
+        private const string cDataHeader = "Type   | Health | State";
+        private const string cPipe = " | ";
+        private const string cNewLine = "\r\n";
 
         private readonly IZoo _zoo;
         private readonly Timer _timer = new Timer();
@@ -25,6 +28,7 @@ namespace ZooSimulator.InterfaceLayer
             _timer.Start();
             _timer.Interval = 1000;
             _timer.Tick += OnTimerTick;
+            UpdateDisplay();
         }
 
         private void OnTimerTick(object sender, EventArgs e)
@@ -43,6 +47,21 @@ namespace ZooSimulator.InterfaceLayer
 
             var data = _zoo.GetAnimalData();
 
+            var sb = new StringBuilder();
+            sb.Append(cDataHeader);
+            sb.Append(cNewLine);
+
+            foreach (var animal in data)
+            {
+                sb.Append(animal.Type);
+                sb.Append(cPipe);
+                sb.Append(Math.Round(animal.Health, 2));
+                sb.Append(cPipe);
+                sb.Append(animal.State);
+                sb.Append(cNewLine);
+            }
+
+            DataDisplay.Text = sb.ToString();
         }
     }
 }

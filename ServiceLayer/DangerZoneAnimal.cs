@@ -5,10 +5,14 @@
         public string DangerZoneCustomerFacingName { get;}
         private readonly float _dangerZoneThreshold;
 
-        public DangerZoneAnimal(float dangerZoneThreshold, string dangerZoneCustomerFacingName)
+        public DangerZoneAnimal(AnimalData data)
         {
-            _dangerZoneThreshold = dangerZoneThreshold;
-            DangerZoneCustomerFacingName = dangerZoneCustomerFacingName;
+            _dangerZoneThreshold = data.CategoryRelatedHealthValue;
+            DangerZoneCustomerFacingName = data.PublicFacingDangerZoneName;
+            UniqueId = data.UniqueId;
+            Health = data.Health;
+            State = data.State;
+            Type = data.Type;
         }
 
         public override float Health
@@ -16,10 +20,17 @@
             get => _health;
             set
             {
+                if (State == State.Dead) return;
+
                 SetHealth(value);
                 if (_health < _dangerZoneThreshold)
                 {
                     State = State.DangerZone;
+                }
+
+                if (_health >= _dangerZoneThreshold) // Could use else here, this feels clearer.
+                {
+                    State = State.Healthy;
                 }
             }
         }

@@ -35,9 +35,10 @@
             // 
             // FeedButton
             // 
-            this.FeedButton.Location = new System.Drawing.Point(616, 307);
+            this.FeedButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FeedButton.Location = new System.Drawing.Point(571, 264);
             this.FeedButton.Name = "FeedButton";
-            this.FeedButton.Size = new System.Drawing.Size(141, 91);
+            this.FeedButton.Size = new System.Drawing.Size(205, 134);
             this.FeedButton.TabIndex = 0;
             this.FeedButton.Text = "Feed all animals";
             this.FeedButton.UseVisualStyleBackColor = true;
@@ -46,18 +47,20 @@
             // DataDisplay
             // 
             this.DataDisplay.AutoSize = true;
+            this.DataDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DataDisplay.Location = new System.Drawing.Point(96, 91);
             this.DataDisplay.Name = "DataDisplay";
-            this.DataDisplay.Size = new System.Drawing.Size(46, 17);
+            this.DataDisplay.Size = new System.Drawing.Size(145, 25);
             this.DataDisplay.TabIndex = 1;
-            this.DataDisplay.Text = "label1";
+            this.DataDisplay.Text = "Data goes here";
             // 
             // TimeDisplay
             // 
             this.TimeDisplay.AutoSize = true;
+            this.TimeDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimeDisplay.Location = new System.Drawing.Point(96, 36);
             this.TimeDisplay.Name = "TimeDisplay";
-            this.TimeDisplay.Size = new System.Drawing.Size(108, 17);
+            this.TimeDisplay.Size = new System.Drawing.Size(148, 25);
             this.TimeDisplay.TabIndex = 1;
             this.TimeDisplay.Text = "Time at the Zoo";
             // 
@@ -65,7 +68,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 637);
             this.Controls.Add(this.TimeDisplay);
             this.Controls.Add(this.DataDisplay);
             this.Controls.Add(this.FeedButton);
