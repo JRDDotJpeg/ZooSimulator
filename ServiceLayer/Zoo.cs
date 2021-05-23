@@ -9,23 +9,28 @@ namespace ZooSimulator.ServiceLayer
         private IDatabaseHandler _databaseHandler;
         private List<IAnimal> _animals;
         private readonly Timer _timer = new Timer();
-        private DateTime _timeAtTheZoo = DateTime.Now;
+        private DateTime _timeAtTheZoo;
+        private DateTime _lastAppliedDamage;
 
         public Zoo(IDatabaseHandler databaseHandler)
         {
             _databaseHandler = databaseHandler;
             _animals = _databaseHandler.FetchAllAnimals();
+            _timeAtTheZoo = DateTime.Now;
+            _lastAppliedDamage = _timeAtTheZoo;
+            _timer.Interval = 1000;
             _timer.Start();
-            _timer.Elapsed += _timer_Elapsed;
+            _timer.Elapsed += OnTimerTick;
         }
 
         public void FeedAllAnimals()
         {
             var random = new Random();
-            var percentToHealTypesBy = new Dictionary<AnimalType, int>();
+            var percentToHealTypesBy = new Dictionary<AnimalType, float>();
             foreach (AnimalType type in Enum.GetValues(typeof(AnimalType)))
             {
-                percentToHealTypesBy.Add(type, random.Next(10, 25));
+                var modifer = (float)(random.Next(10, 25) / 100.00);
+                percentToHealTypesBy.Add(type, modifer);
             }
             foreach (var animal in _animals)
             {
@@ -36,7 +41,7 @@ namespace ZooSimulator.ServiceLayer
 
         public List<AnimalData> GetAnimalData()
         {
-            throw new System.NotImplementedException();
+            return null;
         }
 
         public DateTime GetTimeAtTheZoo()
@@ -44,12 +49,13 @@ namespace ZooSimulator.ServiceLayer
             return _timeAtTheZoo;
         }
 
-        private void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void OnTimerTick(object sender, ElapsedEventArgs e)
         {
-            _timeAtTheZoo.AddMinutes(3);
-            if (_timeAtTheZoo.Minute == 0)
+            _timeAtTheZoo = _timeAtTheZoo.AddMinutes(3);
+            if (_timeAtTheZoo - _lastAppliedDamage > TimeSpan.FromHours(1))
             {
                 OnHourEvent();
+                _lastAppliedDamage = _timeAtTheZoo;
             }
         }
 
@@ -60,7 +66,7 @@ namespace ZooSimulator.ServiceLayer
             {
                 animal.OnHourEvent();
                 var modifer = random.Next(0,20);
-                animal.Health *= (1 - modifer);
+                animal.Health *= (1 - (float)(modifer/100.00));
             }
         }
     }

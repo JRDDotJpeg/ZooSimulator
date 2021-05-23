@@ -15,14 +15,16 @@ namespace ZooSimulator.InterfaceLayer
     {
         private const string cTimeAtTheZoo = "Time at the Zoo: ";
 
-        private IZoo _zoo;
-        private Timer _timer = new Timer();
-        public MainDisplay()
+        private readonly IZoo _zoo;
+        private readonly Timer _timer = new Timer();
+
+        public MainDisplay(IZoo zoo)
         {
+            _zoo = zoo;
             InitializeComponent();
             _timer.Start();
             _timer.Interval = 1000;
-            _timer.Tick += OnTimerTick;  
+            _timer.Tick += OnTimerTick;
         }
 
         private void OnTimerTick(object sender, EventArgs e)

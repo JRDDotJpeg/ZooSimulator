@@ -22,6 +22,7 @@ namespace ZooSimulator.ServiceLayer
                     elephant.UniqueId = id++;
                     elephant.CategoryRelatedHealthValue = 70;
                 }
+                animals.Add(elephant);
             }
 
             // Monkeys
@@ -36,6 +37,7 @@ namespace ZooSimulator.ServiceLayer
                     monkey.UniqueId = id++;
                     monkey.CategoryRelatedHealthValue = 30;
                 }
+                animals.Add(monkey);
             }
 
             // Giraffe
@@ -50,6 +52,7 @@ namespace ZooSimulator.ServiceLayer
                     giraffe.UniqueId = id++;
                     giraffe.CategoryRelatedHealthValue = 50;
                 }
+                animals.Add(giraffe);
             }
 
             return animals;

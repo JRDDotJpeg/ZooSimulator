@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ZooSimulator.ServiceLayer
 {
@@ -11,15 +12,26 @@ namespace ZooSimulator.ServiceLayer
 
     class DatabaseHandler : IDatabaseHandler
     {
-        private DatabaseService _databaseService;
+        private IDatabaseService _databaseService;
+        private IAnimalFactory _animalFactory;
+
+        public DatabaseHandler(IDatabaseService databaseService, IAnimalFactory animalFactory)
+        {
+            _databaseService = databaseService;
+            _animalFactory = animalFactory;
+        }
+
         public List<IAnimal> FetchAllAnimals()
         {
-            throw new System.NotImplementedException();
+            return _databaseService.FetchAnimals()
+                .Select(animalData => _animalFactory.MakeAnimal(animalData))
+                .ToList();
         }
 
         public void UpdateDatabase(List<IAnimal> animals)
         {
-            throw new System.NotImplementedException();
+            var animalData = animals.Select(animal => animal.ToAnimalData()).ToList();
+            _databaseService.UpdateDatabase(animalData);
         }
     }
 }
