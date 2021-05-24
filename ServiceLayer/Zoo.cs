@@ -5,15 +5,18 @@ using System.Timers;
 
 namespace ZooSimulator.ServiceLayer
 {
+    // This class does too much.
+    // The datetime and timer should be moved out into their own class which is injected.
+    // The handle feeding and injuring code should be moved into an injected animal handler class.
     public class Zoo : IZoo
     {
-        private const int cZooMinutesPerSecond = 3;
+        private const int cZooMinutesPerSecond = 3; // These should be pulled from the DB, would allow more testing.
         private const int cMinimumHeal = 10;
         private const int cMaxHeal = 25;
         private const int cMinDamage = 0;
         private const int cMaxDamage = 20;
 
-        private readonly IDatabaseHandler _databaseHandler;
+        private readonly IDatabaseHandler _databaseHandler; // Don't make a local as resharper suggests, needed as member for extension.
         private readonly List<IAnimal> _animals;
         private readonly Timer _timer = new Timer();
         private DateTime _timeAtTheZoo;
@@ -42,7 +45,6 @@ namespace ZooSimulator.ServiceLayer
             foreach (var animal in _animals)
             {
                 animal.Health *= 1 + percentToHealTypesBy[animal.Type];
-
             }
         }
 

@@ -19,6 +19,8 @@ namespace ZooSimulator.InterfaceLayer
         private const string cNewLine = "\r\n";
 
         private readonly IZoo _zoo;
+        // That we have two identical timers is amusing an feels inefficient but
+        // removing the time from zoo would move business logic into the display layer
         private readonly Timer _timer = new Timer();
 
         public MainDisplay(IZoo zoo)
@@ -39,6 +41,7 @@ namespace ZooSimulator.InterfaceLayer
         private void FeedButton_Click(object sender, EventArgs e)
         {
             _zoo.FeedAllAnimals();
+            UpdateDisplay();
         }
 
         private void UpdateDisplay()
@@ -51,13 +54,16 @@ namespace ZooSimulator.InterfaceLayer
             sb.Append(cDataHeader);
             sb.Append(cNewLine);
 
+            
+
             foreach (var animal in data)
             {
                 sb.Append(animal.Type);
                 sb.Append(cPipe);
                 sb.Append(Math.Round(animal.Health, 2));
+                sb.Append('%');
                 sb.Append(cPipe);
-                sb.Append(animal.State);
+                sb.Append(animal.State == State.DangerZone ? animal.PublicFacingDangerZoneName : animal.State.ToString());
                 sb.Append(cNewLine);
             }
 

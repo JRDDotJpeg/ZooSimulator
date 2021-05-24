@@ -4,13 +4,9 @@
     {
         private readonly float _deathThreshold;
 
-        public InstantDeathAnimal(AnimalData data)
+        public InstantDeathAnimal(AnimalData data) : base(data)
         {
             _deathThreshold = data.CategoryRelatedHealthValue;
-            UniqueId = data.UniqueId;
-            Health = data.Health;
-            State = data.State;
-            Type = data.Type;
         }
 
         public override float Health
@@ -30,19 +26,20 @@
 
         public override void OnHourEvent()
         {
-            // Nothing to do here.
+            // Instant death animals don't currently react to time passing directly.
+            // As such we don't need to do anything here.
         }
 
         public override AnimalData ToAnimalData()
         {
             return new AnimalData()
             {
-                UniqueId = this.UniqueId,
+                UniqueId = this.UniqueId,  // Duplicated code here, move into the base class.
                 Health = this.Health,
                 Type = this.Type,
-                Category = AnimalCategory.InstantDeathAnimal,
                 State = this.State,
-                PublicFacingDangerZoneName = "",
+                Category = AnimalCategory.InstantDeathAnimal,
+                PublicFacingDangerZoneName = "", // Not ideal but not worth creating a new object to avoid.
                 CategoryRelatedHealthValue = this._deathThreshold
             };
         }

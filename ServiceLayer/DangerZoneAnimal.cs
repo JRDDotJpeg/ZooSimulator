@@ -5,14 +5,10 @@
         public string DangerZoneCustomerFacingName { get;}
         private readonly float _dangerZoneThreshold;
 
-        public DangerZoneAnimal(AnimalData data)
+        public DangerZoneAnimal(AnimalData data) : base(data)
         {
             _dangerZoneThreshold = data.CategoryRelatedHealthValue;
             DangerZoneCustomerFacingName = data.PublicFacingDangerZoneName;
-            UniqueId = data.UniqueId;
-            Health = data.Health;
-            State = data.State;
-            Type = data.Type;
         }
 
         public override float Health
@@ -44,11 +40,11 @@
         {
             return new AnimalData()
             {
-                UniqueId = this.UniqueId,
+                UniqueId = this.UniqueId, // Duplicated code here, move into the base class.
                 Health = this.Health,
                 Type = this.Type,
-                Category = AnimalCategory.DangerZoneAnimal,
                 State = this.State,
+                Category = AnimalCategory.DangerZoneAnimal,
                 PublicFacingDangerZoneName = this.DangerZoneCustomerFacingName,
                 CategoryRelatedHealthValue = this._dangerZoneThreshold
             };
